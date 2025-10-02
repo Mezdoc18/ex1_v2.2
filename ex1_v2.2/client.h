@@ -20,6 +20,7 @@ struct etClient
 	enum etStatClient enFrequentation;
 };
 
+
 // setters
 
 void setclientNum(struct etClient* pstClient, int dNum);
@@ -43,3 +44,7 @@ void getClientPrenom(struct etClient* pstClient, char* PrenomClient);
 void getClientAdresse(struct etClient* pstClient, char* AdresseClient);
 
 enum etStatClient getClientFrequentation(struct etClient* pstClient);
+
+// fonctions autres
+
+void InitClient(struct etClient* pstClient, int dNumero, char sAjoutNom[], char sAjoutPrenom[], char sAjoutAdresse[], enum etStatClient enStatut);

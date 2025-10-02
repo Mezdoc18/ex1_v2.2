@@ -15,11 +15,8 @@ int main()
 	char recupPrenom[TAILLE_PRENOM] = { '\0' };
 	char recupAdresse[TAILLE_ADRESSE] = { '\0' };
 
-	setclientNum(&oSocietePOO.tClients[0], 100);
-	setClientNom(&oSocietePOO.tClients[0],sNomTest);
-	setClientPrenom(&oSocietePOO.tClients[0], sPrenomTest);
-	setclientAdresse(&oSocietePOO.tClients[0], sAdresse);
-	setClientFrequentation(&oSocietePOO.tClients[0], enTestStatut);
+	InitClient(&oSocietePOO.tClients[0], 0, sNomTest, sPrenomTest, sAdresse, enTestStatut);
+
 
 	printf("NUM CLIENT: %d\n\n", getClientNum(&oSocietePOO.tClients[0]));
 	getClientNom(&oSocietePOO.tClients[0], recupNom);

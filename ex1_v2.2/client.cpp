@@ -52,3 +52,12 @@ enum etStatClient getClientFrequentation(struct etClient* pstClient)
 {
 	return pstClient->enFrequentation;
 }
+
+void InitClient(struct etClient* pstClient, int dNumero, char sAjoutNom[], char sAjoutPrenom[], char sAjoutAdresse[], enum etStatClient enStatut)
+{
+	setclientNum(pstClient, dNumero);
+	setClientNom(pstClient, sAjoutNom);
+	setClientPrenom(pstClient, sAjoutPrenom);
+	setclientAdresse(pstClient, sAjoutAdresse);
+	setClientFrequentation(pstClient, enStatut);
+}
