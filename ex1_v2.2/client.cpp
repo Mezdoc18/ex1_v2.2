@@ -7,20 +7,20 @@ void setclientNum(struct etClient* pstClient, int dNum)
 	pstClient->dNumClient = dNum;
 }
 
-void setClientNom(struct etClient* pstClient, const char* NouveauNom)
+void setClientNom(struct etClient* pstClient, char* NouveauNom)
 {
-	strcpy_s(pstClient->sNom, sizeof(pstClient->sNom), NouveauNom);
+	strcpy_s(pstClient->sNom, TAILLE_NOM, NouveauNom);
 }
 
-void setClientPrenom(struct etClient* pstClient, const char* NouveauPrenom)
+void setClientPrenom(struct etClient* pstClient, char* NouveauPrenom)
 {
-	strcpy_s(pstClient->sPrenom, sizeof(pstClient->sPrenom), NouveauPrenom);
+	strcpy_s(pstClient->sPrenom, TAILLE_PRENOM, NouveauPrenom);
 }
 
-void setclientAdresse(struct etClient* pstClient, const char* NouvelleAdresse)
+void setclientAdresse(struct etClient* pstClient, char* NouvelleAdresse)
 
 {
-	strcpy_s(pstClient->sAdresse, sizeof(pstClient->sAdresse), NouvelleAdresse);
+	strcpy_s(pstClient->sAdresse, TAILLE_ADRESSE, NouvelleAdresse);
 }
 
 void setClientFrequentation(struct etClient* pstClient, enum etStatClient Frequentation)
@@ -35,17 +35,17 @@ int getClientNum(struct etClient* pstclient)
 
 void getClientNom(struct etClient* pstClient, char *NomClient)
 {
-	strcpy_s(NomClient, sizeof(NomClient), pstClient->sNom);
+	strcpy_s(NomClient, TAILLE_NOM, pstClient->sNom);
 }
 
 void getClientPrenom(struct etClient* pstClient, char* PrenomClient)
 {
-	strcpy_s(PrenomClient, sizeof(PrenomClient), pstClient->sNom);
+	strcpy_s(PrenomClient, TAILLE_PRENOM, pstClient->sPrenom);
 }
 
 void getClientAdresse(struct etClient* pstClient, char* AdresseClient)
 {
-	strcpy_s(AdresseClient, sizeof(AdresseClient), pstClient->sNom);
+	strcpy_s(AdresseClient, TAILLE_ADRESSE, pstClient->sAdresse);
 }
 
 enum etStatClient getClientFrequentation(struct etClient* pstClient)

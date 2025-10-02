@@ -1,5 +1,7 @@
 #pragma once
-
+#define TAILLE_NOM 40
+#define TAILLE_PRENOM 30
+#define TAILLE_ADRESSE 80
 enum etStatClient
 {
 	OCCASIONNEL = 0,
@@ -12,9 +14,9 @@ enum etStatClient
 struct etClient
 {
 	int dNumClient;
-	char sNom[40];
-	char sPrenom[30];
-	char sAdresse[80];
+	char sNom[TAILLE_NOM];
+	char sPrenom[TAILLE_PRENOM];
+	char sAdresse[TAILLE_ADRESSE];
 	enum etStatClient enFrequentation;
 };
 
@@ -22,11 +24,11 @@ struct etClient
 
 void setclientNum(struct etClient* pstClient, int dNum);
 
-void setClientNom(struct etClient* pstClient, const char* NouveauNom);
+void setClientNom(struct etClient* pstClient, char* NouveauNom);
 
-void setClientPrenom(struct etClient* pstClient, const char* NouveauPrenom);
+void setClientPrenom(struct etClient* pstClient, char* NouveauPrenom);
 
-void setclientAdresse(struct etClient* pstClient, const char* NouvelleAdresse);
+void setclientAdresse(struct etClient* pstClient, char* NouvelleAdresse);
 
 void setClientFrequentation(struct etClient* pstClient, enum etStatClient Frequentation);
 
@@ -34,10 +36,10 @@ void setClientFrequentation(struct etClient* pstClient, enum etStatClient Freque
 
 int getClientNum(struct etClient* pstclient);
 
-void getClientNom(struct etClient* pstClient, const char* NomClient);
+void getClientNom(struct etClient* pstClient, char* NomClient);
 
-void getClientPrenom(struct etClient* pstClient, const char* PrenomClient);
+void getClientPrenom(struct etClient* pstClient, char* PrenomClient);
 
-void getClientAdresse(struct etClient* pstClient, const char* AdresseClient);
+void getClientAdresse(struct etClient* pstClient, char* AdresseClient);
 
 enum etStatClient getClientFrequentation(struct etClient* pstClient);
