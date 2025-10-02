@@ -7,6 +7,12 @@
 struct etCollClients
 {
 	struct etClient tClients[TAILLETAB_CLIENT];
-	int dNbreClientOccupe;
+	int dNbreClients;
 
 };
+
+// setters
+
+void InitCollClients(struct etCollClients* pstCollCl);
+
+int SetNouveauClient(struct etCollClients* pstCollCl);

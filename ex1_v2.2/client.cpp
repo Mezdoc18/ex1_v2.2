@@ -2,6 +2,12 @@
 #include <string.h>
 #include "client.h"
 
+/********************************************************
+ Printf devra être remplacé par l'objet console dans la
+ fct void AfficherClient
+*********************************************************/
+
+
 void setclientNum(struct etClient* pstClient, int dNum)
 {
 	pstClient->dNumClient = dNum;
@@ -60,4 +66,40 @@ void InitClient(struct etClient* pstClient, int dNumero, char sAjoutNom[], char 
 	setClientPrenom(pstClient, sAjoutPrenom);
 	setclientAdresse(pstClient, sAjoutAdresse);
 	setClientFrequentation(pstClient, enStatut);
+}
+
+
+void AfficherClient(struct etClient* pstClient)
+{
+	char recupNom[TAILLE_NOM] = { '\0' };
+	char recupPrenom[TAILLE_PRENOM] = { '\0' };
+	char recupAdresse[TAILLE_ADRESSE] = { '\0' };
+
+	printf("NUM CLIENT: %d\n\n", getClientNum(pstClient));
+	getClientNom(pstClient, recupNom);
+	getClientPrenom(pstClient, recupPrenom);
+	getClientAdresse(pstClient, recupAdresse);
+	getClientFrequentation(pstClient);
+
+	printf("NOM: %s\n", recupNom);
+	printf("PRENOM: %s\n", recupPrenom);
+	printf("ADRESSE: %s\n", recupAdresse);
+
+	if (pstClient->enFrequentation == TRES_REGULIER)
+	{
+		printf("STATUT: TRES REGULIER\n\n");
+	}
+	else if(pstClient->enFrequentation == REGULIER)
+	{
+		printf("STATUT: REGULIER\n\n");
+	}
+	else if (pstClient->enFrequentation == OCCASIONNEL)
+	{
+		printf("STATUT: OCCASIONNEL\n\n");
+	}
+	else
+	{
+		printf("Pas statut attendu dans ce test\n");
+	}
+	
 }
