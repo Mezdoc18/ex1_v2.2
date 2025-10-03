@@ -3,9 +3,16 @@
 #include <string.h>
 #include "client.h"
 #include "collclients.h"
+#include "console.h"
+
 int main()
 {
-	struct etCollClients oSocietePOO = { 0 };
+	struct etCollClient oSocietePOO = { 0 };
+
+	struct etConsole oConsole;
+
+	LancementMenu(&oConsole, &oSocietePOO);
+
 	char sNomTest[TAILLE_NOM] = "Radeon";
 	char sPrenomTest[TAILLE_PRENOM] = "Bob";
 	char sAdresse[TAILLE_ADRESSE] = "Rue des Liserons, 24 Seraing";
