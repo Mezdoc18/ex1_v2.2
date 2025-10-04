@@ -1,6 +1,7 @@
 #include <iostream>
 #include <string.h>
 #include "client.h"
+#include "console.h"
 
 /********************************************************
  Printf devra être remplacé par l'objet console dans la
@@ -23,7 +24,7 @@ void setClientPrenom(struct etClient* pstClient, char* NouveauPrenom)
 	strcpy_s(pstClient->sPrenom, TAILLE_PRENOM, NouveauPrenom);
 }
 
-void setclientAdresse(struct etClient* pstClient, char* NouvelleAdresse)
+void setClientAdresse(struct etClient* pstClient, char* NouvelleAdresse)
 
 {
 	strcpy_s(pstClient->sAdresse, TAILLE_ADRESSE, NouvelleAdresse);
@@ -64,42 +65,130 @@ void InitClient(struct etClient* pstClient, int dNumero, char sAjoutNom[], char 
 	setclientNum(pstClient, dNumero);
 	setClientNom(pstClient, sAjoutNom);
 	setClientPrenom(pstClient, sAjoutPrenom);
-	setclientAdresse(pstClient, sAjoutAdresse);
+	setClientAdresse(pstClient, sAjoutAdresse);
 	setClientFrequentation(pstClient, enStatut);
 }
 
-
-void AfficherClient(struct etClient* pstClient)
+void LireDataNouvClientViaConsole(struct etClient* pstClient, int Index, struct etConsole* pstConsole)
 {
-	char recupNom[TAILLE_NOM] = { '\0' };
-	char recupPrenom[TAILLE_PRENOM] = { '\0' };
-	char recupAdresse[TAILLE_ADRESSE] = { '\0' };
+	// Gestion NUMERO CLIENT
 
-	printf("NUM CLIENT: %d\n\n", getClientNum(pstClient));
-	getClientNom(pstClient, recupNom);
-	getClientPrenom(pstClient, recupPrenom);
-	getClientAdresse(pstClient, recupAdresse);
-	getClientFrequentation(pstClient);
+	int dNumClient = Index + 1;
+	char sNumClient[12] = {'\0'};
 
-	printf("NOM: %s\n", recupNom);
-	printf("PRENOM: %s\n", recupPrenom);
-	printf("ADRESSE: %s\n", recupAdresse);
+	_itoa_s(dNumClient, sNumClient, 10);
+	AffichageConsole(pstConsole, "Le numero attribue au client est ");
+	AffichageConsole(pstConsole, sNumClient);
+	AffichageConsole(pstConsole, "\n");
 
-	if (pstClient->enFrequentation == TRES_REGULIER)
+	// Gestion NOM
+	char sNomTemp[TAILLE_NOM] = { '\0' };
+	AffichageConsole(pstConsole, "Quel est le nom du client? ");
+	LireTabCharConsole(pstConsole, sNomTemp, TAILLE_NOM);
+
+	// Gestion PRENOM
+	char sPrenomTemp[TAILLE_PRENOM] = { '\0' };
+	AffichageConsole(pstConsole, "Quel est le prenom du client? ");
+	LireTabCharConsole(pstConsole, sPrenomTemp, TAILLE_PRENOM);
+
+	// Gestion ADRESSE
+	char sAdresseTemp[TAILLE_ADRESSE] = { '\0' };
+	AffichageConsole(pstConsole, "Quelle est l'adresse du client? ");
+	LireTabCharConsole(pstConsole, sAdresseTemp, TAILLE_ADRESSE);
+
+	// Gestion FREQUENTATION
+	int dFrequentation = 0;
+	enum etStatClient enTemp = INCONNUE;
+
+	AffichageConsole(pstConsole, "Quelle est la frequentation du client?\n");
+	AffichageConsole(pstConsole, "OCCASIONNEL(1)\n");
+	AffichageConsole(pstConsole, "REGULIER(2)\n");
+	AffichageConsole(pstConsole, "TRES REGULIER(3)\n");
+
+	do
 	{
-		printf("STATUT: TRES REGULIER\n\n");
-	}
-	else if(pstClient->enFrequentation == REGULIER)
+		switch (dFrequentation = LireIntConsole(pstConsole))
+		{
+		case 1:
+			enTemp = OCCASIONNEL;
+			break;
+
+		case 2:
+			enTemp = REGULIER;
+			break;
+		case 3:
+			enTemp = TRES_REGULIER;
+			break;
+		default:
+			AffichageConsole(pstConsole, "Erreur dans le choix:\n");
+			AffichageConsole(pstConsole, "OCCASIONNEL(1)\n");
+			AffichageConsole(pstConsole, "REGULIER(2)\n");
+			AffichageConsole(pstConsole, "TRES REGULIER(3)\n\n");
+			break;
+		}
+	} while (dFrequentation < 1 || dFrequentation >3);
+
+	InitClient(pstClient, dNumClient, sNomTemp, sPrenomTemp, sAdresseTemp, enTemp);
+}
+
+void SupprimerClient(struct etClient* pstClient)
+{
+	int dNull = 0;
+	char cNull = '\0';
+
+	setclientNum(pstClient, dNull);
+	setClientNom(pstClient, &cNull);
+	setClientPrenom(pstClient, &cNull);
+	setClientAdresse(pstClient, &cNull);
+	setClientFrequentation(pstClient, INCONNUE);
+}
+
+int AfficherClient(struct etClient* pstClient, struct etConsole* pstConsole)
+{
+	int dClientVide = 1;
+
+	if (pstClient->dNumClient != 0)
 	{
-		printf("STATUT: REGULIER\n\n");
-	}
-	else if (pstClient->enFrequentation == OCCASIONNEL)
-	{
-		printf("STATUT: OCCASIONNEL\n\n");
+		char recupNum[12] = { '\0' };
+		char recupNom[TAILLE_NOM] = { '\0' };
+		char recupPrenom[TAILLE_PRENOM] = { '\0' };
+		char recupAdresse[TAILLE_ADRESSE] = { '\0' };
+
+		AffichageConsole(pstConsole,"\n");
+		AffichageConsole(pstConsole,"NUM CLIENT: ");
+		int dNumClient = getClientNum(pstClient);
+		_itoa_s(dNumClient, recupNum, 10);
+		AffichageConsole(pstConsole, recupNum);
+
+		AffichageConsole(pstConsole, "\nNOM: ");
+		getClientNom(pstClient, recupNom);
+		AffichageConsole(pstConsole,recupNom);
+
+		AffichageConsole(pstConsole, "\nADRESSE: ");
+		getClientAdresse(pstClient, recupAdresse);
+		AffichageConsole(pstConsole, recupAdresse);
+		
+		if (pstClient->enFrequentation == TRES_REGULIER)
+		{
+			printf("\nSTATUT: TRES REGULIER\n\n");
+		}
+		else if (pstClient->enFrequentation == REGULIER)
+		{
+			printf("\nSTATUT: REGULIER\n\n");
+		}
+		else if (pstClient->enFrequentation == OCCASIONNEL)
+		{
+			printf("\nSTATUT: OCCASIONNEL\n\n");
+		}
+		else
+		{
+			printf("Erreur dans le status de frequentation\n");
+		}
+		return dClientVide = 0;
 	}
 	else
 	{
-		printf("Pas statut attendu dans ce test\n");
+		return dClientVide = 1;
 	}
-	
+		
 }

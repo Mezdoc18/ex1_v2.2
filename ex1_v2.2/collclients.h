@@ -1,5 +1,6 @@
 #pragma once
 #include "client.h"
+#define SUCCES 0
 #define LISTE_VIDE 1
 #define PLACE_DISPONIBLE 2
 #define TABLEAU_PLEIN 3
@@ -19,5 +20,9 @@ void initCollClient(struct etCollClient* pstCollClient);
 int isTabFull(struct etCollClient* pstCollClient);
 
 int AjouterClientDansCollection(struct etCollClient* pstCollClient, struct etConsole* pstConsole);
+
+void AfficherCollClient(struct etCollClient* pstCollClient, struct etConsole* pstConsole);
+
+int SupprimerClientDeLaColl(struct etCollClient* pstCollClient, struct etConsole* pstConsole);
 
 void VideBuffer();

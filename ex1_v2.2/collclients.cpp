@@ -11,7 +11,7 @@ void initCollClient(struct etCollClient* pstCollClient)
 		setclientNum(&pstCollClient->tClients[dI], 0);
 		setClientNom(&pstCollClient->tClients[dI], &sNull);
 		setClientPrenom(&pstCollClient->tClients[dI], &sNull);
-		setclientAdresse(&pstCollClient->tClients[dI], &sNull);
+		setClientAdresse(&pstCollClient->tClients[dI], &sNull);
 		setClientFrequentation(&pstCollClient->tClients[dI], INCONNUE);
 	}
 	pstCollClient->dNbreClient = 0;
@@ -35,44 +35,54 @@ int AjouterClientDansCollection(struct etCollClient* pstCollClient, struct etCon
 		//mais aussi l'index de la prochaine struct client dispo
 		int Ix = pstCollClient->dNbreClient;
 
-		AffichageConsole(pstConsole, "Client numéro %d\n", );
-		int dNumclient = ;
-
-
-		
-		setclientNum(&pstCollClient->tClients[Ix], 0);
-		setClientNom(&pstCollClient->tClients[Ix], &sNull);
-		setClientPrenom(&pstCollClient->tClients[Ix], &sNull);
-		setclientAdresse(&pstCollClient->tClients[Ix], &sNull);
-		setClientFrequentation(&pstCollClient->tClients[Ix], INCONNUE);
-		
-
-		pstCollClient->dNbreClient++;
-		
-
-		AffichageConsole(pstConsole, "Entrez le nom du client\n");
-		LireTabCharConsole(pstConsole, tTempNom, TAILLE_NOM);
-		printf("Le Nom encode est %s\n", tTempNom);
+		LireDataNouvClientViaConsole(&pstCollClient->tClients[Ix], Ix, pstConsole);
+				
+		pstCollClient->dNbreClient++;	
+		return SUCCES;
 	}
 	else
 	{
 		AffichageConsole(pstConsole, "Ajout impossible car tableau plein\n");
 		return TABLEAU_PLEIN;
-	}
-	
-	
-	
-	int PlaceNouvClient = PlaceTabDispo(pstCollClient);
+	}	
+}
+
+void AfficherCollClient(struct etCollClient* pstCollClient, struct etConsole *pstConsole)
+{
+	// compteur qui va s'incrémenter à chaque fois que AfficherClient est appelé et que le client sera vide
+	// si le compteur = au nbre de place du tableau, alors on affiche qu'il est vide
+	int dCompteur = 0;
 
 	for (int dI = 0; dI < TAILLETAB_CLIENT; dI++)
 	{
-		setclientNum(&pstCollClient->tClients[dI], 0);
-		setClientNom(&pstCollClient->tClients[dI], &sNull);
-		setClientPrenom(&pstCollClient->tClients[dI], &sNull);
-		setclientAdresse(&pstCollClient->tClients[dI], &sNull);
-		setClientFrequentation(&pstCollClient->tClients[dI], INCONNUE);
+		dCompteur += AfficherClient(&pstCollClient->tClients[dI], pstConsole);
 	}
-	
-	pstCollClient->dNbreClient++;
+
+	if (dCompteur == TAILLETAB_CLIENT)
+		AffichageConsole(pstConsole, "Tableau VIDE\n");
+}
+
+int SupprimerClientDeLaColl(struct etCollClient* pstCollClient, struct etConsole* pstConsole)
+{
+	 // on vérifie que la collection n'est pas vide
+	if (pstCollClient->dNbreClient > 0)
+	{
+		int dNumClientASupp = 0;
+		do
+		{
+			AffichageConsole(pstConsole, "Quel client voulez-vous supprimer?\n");
+			AffichageConsole(pstConsole, "Merci d'entrer son numero?\n");
+			dNumClientASupp = LireIntConsole(pstConsole);
+		} while (dNumClientASupp < 1 || dNumClientASupp > TAILLETAB_CLIENT);
+
+		SupprimerClient(&pstCollClient->tClients[dNumClientASupp - 1]);
+
+		AffichageConsole(pstConsole, "Client supprime avec succes!\n\n");
+		return SUCCES;
+	}
+	else
+	{
+		return LISTE_VIDE;
+	}
 }
 

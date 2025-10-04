@@ -30,7 +30,7 @@ void setClientNom(struct etClient* pstClient, char* NouveauNom);
 
 void setClientPrenom(struct etClient* pstClient, char* NouveauPrenom);
 
-void setclientAdresse(struct etClient* pstClient, char* NouvelleAdresse);
+void setClientAdresse(struct etClient* pstClient, char* NouvelleAdresse);
 
 void setClientFrequentation(struct etClient* pstClient, enum etStatClient Frequentation);
 
@@ -48,6 +48,11 @@ enum etStatClient getClientFrequentation(struct etClient* pstClient);
 
 // fonctions autres
 
+void LireDataNouvClientViaConsole(struct etClient* pstClient, int Index, struct etConsole* pstConsole);
+
 void InitClient(struct etClient* pstClient, int dNumero, char sAjoutNom[], char sAjoutPrenom[], char sAjoutAdresse[], enum etStatClient enStatut);
 
-void AfficherClient(struct etClient* pstClient);
+void SupprimerClient(struct etClient* pstClient);
+
+int AfficherClient(struct etClient* pstClient, struct etConsole *pstConsole);
+
