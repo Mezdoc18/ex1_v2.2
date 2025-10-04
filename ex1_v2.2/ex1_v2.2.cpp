@@ -3,35 +3,63 @@
 #include <string.h>
 #include "client.h"
 #include "collclients.h"
+#include "console.h"
+
 int main()
 {
-	struct etCollClients oSocietePOO = { 0 };
+	struct etCollClient oSocietePOO = { 0 };
+    struct etConsole oConsole;
 
-	char sNomTest1[TAILLE_NOM] = "Radeon";
-	char sPrenomTest1[TAILLE_PRENOM] = "Bob";
-	char sAdresse1[TAILLE_ADRESSE] = "Rue des Liserons, 24 Seraing";
-	enum etStatClient enTestStatut1 = TRES_REGULIER;
+    int dChoix = 0;
+  
+    do
+    {
+        AffichageConsole(&oConsole,"voulez-vous ajouter un nouveau client (1), en supprimer un (2), afficher la liste complète (3) ou quitter ce menu (4)?\n");
+        dChoix = LireIntConsole(&oConsole);
 
-	char sNomTest2[TAILLE_NOM] = "Radeon";
-	char sPrenomTest2[TAILLE_PRENOM] = "Tiger";
-	char sAdresse2[TAILLE_ADRESSE] = "Rue de la Vierge Mairie, 24 Outisplou";
-	enum etStatClient enTestStatut2 = REGULIER;
+        switch (dChoix)
+        {
+        case 1:
+           
+            if (isTabFull(&oSocietePOO) == PLACE_DISPONIBLE)
+            {
+               
+                // ajout client
+                char tTempNom[TAILLE_NOM] = { '\0' };
 
-	char sNomTest3[TAILLE_NOM] = "Baracouda";
-	char sPrenomTest3[TAILLE_PRENOM] = "Ana";
-	char sAdresse3[TAILLE_ADRESSE] = "Rue des Falaises, 32 Huy";
-	enum etStatClient enTestStatut3 = OCCASIONNEL;
+                AffichageConsole(&oConsole, "Entrez le nom du client\n");
+                LireTabCharConsole(&oConsole, tTempNom, TAILLE_NOM);
+                printf("Le Nom encode est %s\n", tTempNom);
+            }
+            else
+            {
+                AffichageConsole(&oConsole,"Ajout impossible car tableau plein\n");
+            }
+            break;
 
-	InitClient(&oSocietePOO.tClients[0], 1, sNomTest1,sPrenomTest1,sAdresse1,enTestStatut1);
-	InitClient(&oSocietePOO.tClients[1], 2, sNomTest2, sPrenomTest2, sAdresse2, enTestStatut2);
-	InitClient(&oSocietePOO.tClients[2], 3, sNomTest3, sPrenomTest3, sAdresse3, enTestStatut3);
+        case 2:
 
-	AfficherClient(&oSocietePOO.tClients[0]);
-	AfficherClient(&oSocietePOO.tClients[1]);
-	AfficherClient(&oSocietePOO.tClients[2]);
+            // suppression client
+            break;
 
+        case 3:
+            //On affiche tous les clients
+
+            break;
+
+        case 4:
+            AffichageConsole(&oConsole,"Merci et a bientot\n");
+            break;
+
+        default:
+            AffichageConsole(&oConsole,"Erreur choix dans le menu\n");
+            break;
+        }
+
+    } while (dChoix != 4);
 	return 0;
 }
+
 
 /*****************************************
  Test de la struct client et des fonctions
@@ -68,3 +96,32 @@ else
 	printf("Pas statut attendu dans ce test\n");
 }
 */
+
+
+/***********************************************
+*2ème série de test
+************************************************/
+
+/*char sNomTest1[TAILLE_NOM] = "Radeon";
+	char sPrenomTest1[TAILLE_PRENOM] = "Bob";
+	char sAdresse1[TAILLE_ADRESSE] = "Rue des Liserons, 24 Seraing";
+	enum etStatClient enTestStatut1 = TRES_REGULIER;
+
+	char sNomTest2[TAILLE_NOM] = "Radeon";
+	char sPrenomTest2[TAILLE_PRENOM] = "Tiger";
+	char sAdresse2[TAILLE_ADRESSE] = "Rue de la Vierge Mairie, 24 Outisplou";
+	enum etStatClient enTestStatut2 = REGULIER;
+
+	char sNomTest3[TAILLE_NOM] = "Baracouda";
+	char sPrenomTest3[TAILLE_PRENOM] = "Ana";
+	char sAdresse3[TAILLE_ADRESSE] = "Rue des Falaises, 32 Huy";
+	enum etStatClient enTestStatut3 = OCCASIONNEL;
+
+	InitClient(&oSocietePOO.tClients[0], 1, sNomTest1,sPrenomTest1,sAdresse1,enTestStatut1);
+	InitClient(&oSocietePOO.tClients[1], 2, sNomTest2, sPrenomTest2, sAdresse2, enTestStatut2);
+	InitClient(&oSocietePOO.tClients[2], 3, sNomTest3, sPrenomTest3, sAdresse3, enTestStatut3);
+
+	AfficherClient(&oSocietePOO.tClients[0]);
+	AfficherClient(&oSocietePOO.tClients[1]);
+	AfficherClient(&oSocietePOO.tClients[2]);
+	*/

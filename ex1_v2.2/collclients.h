@@ -1,18 +1,21 @@
 #pragma once
 #include "client.h"
 #define LISTE_VIDE 1
+#define PLACE_DISPONIBLE 2
+#define TABLEAU_PLEIN 3
 
 #define TAILLETAB_CLIENT 20
 
-struct etCollClients
+struct etCollClient
 {
 	struct etClient tClients[TAILLETAB_CLIENT];
-	int dNbreClients;
+	int dNbreClient;
 
 };
 
-// setters
+// Vérifie si place libre
+int isTabFull(struct etCollClient* pstCollClient);
 
-void InitCollClients(struct etCollClients* pstCollCl);
+int PlaceTabDispo(struct etCollClient* pstCollClient);
 
-int SetNouveauClient(struct etCollClients* pstCollCl);
+void VideBuffer();

@@ -1,22 +1,24 @@
 #include <iostream>
-#include <string.h>
 #include "collclients.h"
 
-void InitCollClients(struct etCollClients* pstCollCl)
+
+int isTabFull(struct etCollClient* pstCollClient)
 {
-	pstCollCl->dNbreClients = 0;
+	if (pstCollClient->dNbreClient < TAILLETAB_CLIENT)
+		{
+		return PLACE_DISPONIBLE;
+		}
+	else 
+		return TABLEAU_PLEIN;
 }
 
-int SetNouveauClient(struct etCollClients* pstCollCl)
+/************************************************************************
+dNbreClient représente le nbre de client inscrit dans le tableau
+mais aussi l'indice de la place du prochain client libre dans le tableau
+ex j'ai 2 clients donc occupent les tab[0] et tab[1]
+donc tab[2] est libre
+************************************************************************/
+int PlaceTabDispo(struct etCollClient* pstCollClient)
 {
-	// dNbreclients correspond au nbre de clients encodés MAIS correspond également en tant qu'indice à la prochaine place libre dans le tab
-	int dI = pstCollCl->dNbreClients;
-		
-
-	//s'il reste de la place dans le tableau
-	if (dI < TAILLETAB_CLIENT )
-	{
-	
-
-	}
+	return pstCollClient->dNbreClient;
 }
