@@ -4,7 +4,8 @@
 #define TAILLE_ADRESSE 80
 enum etStatClient
 {
-	OCCASIONNEL = 0,
+	INCONNUE = 0,
+	OCCASIONNEL,
 	REGULIER,
 	TRES_REGULIER
 };

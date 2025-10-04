@@ -11,6 +11,8 @@ int main()
     struct etConsole oConsole;
 
     int dChoix = 0;
+
+    initCollClient(&oSocietePOO);
   
     do
     {
@@ -21,20 +23,7 @@ int main()
         {
         case 1:
            
-            if (isTabFull(&oSocietePOO) == PLACE_DISPONIBLE)
-            {
-               
-                // ajout client
-                char tTempNom[TAILLE_NOM] = { '\0' };
-
-                AffichageConsole(&oConsole, "Entrez le nom du client\n");
-                LireTabCharConsole(&oConsole, tTempNom, TAILLE_NOM);
-                printf("Le Nom encode est %s\n", tTempNom);
-            }
-            else
-            {
-                AffichageConsole(&oConsole,"Ajout impossible car tableau plein\n");
-            }
+            AjouterClientDansCollection(&oSocietePOO, &oConsole);
             break;
 
         case 2:

@@ -13,9 +13,11 @@ struct etCollClient
 
 };
 
+void initCollClient(struct etCollClient* pstCollClient);
+
 // Vérifie si place libre
 int isTabFull(struct etCollClient* pstCollClient);
 
-int PlaceTabDispo(struct etCollClient* pstCollClient);
+int AjouterClientDansCollection(struct etCollClient* pstCollClient, struct etConsole* pstConsole);
 
 void VideBuffer();
