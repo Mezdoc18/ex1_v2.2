@@ -9,31 +9,6 @@
 *********************************************************/
 
 
-void setclientNum(struct etClient* pstClient, int dNum)
-{
-	pstClient->dNumClient = dNum;
-}
-
-void setClientNom(struct etClient* pstClient, char* NouveauNom)
-{
-	strcpy_s(pstClient->sNom, TAILLE_NOM, NouveauNom);
-}
-
-void setClientPrenom(struct etClient* pstClient, char* NouveauPrenom)
-{
-	strcpy_s(pstClient->sPrenom, TAILLE_PRENOM, NouveauPrenom);
-}
-
-void setClientAdresse(struct etClient* pstClient, char* NouvelleAdresse)
-
-{
-	strcpy_s(pstClient->sAdresse, TAILLE_ADRESSE, NouvelleAdresse);
-}
-
-void setClientFrequentation(struct etClient* pstClient, enum etStatClient Frequentation)
-{
-	pstClient->enFrequentation = Frequentation;
-}
 
 int getClientNum(struct etClient* pstclient)
 {
@@ -62,11 +37,11 @@ enum etStatClient getClientFrequentation(struct etClient* pstClient)
 
 void InitClient(struct etClient* pstClient, int dNumero, char sAjoutNom[], char sAjoutPrenom[], char sAjoutAdresse[], enum etStatClient enStatut)
 {
-	setclientNum(pstClient, dNumero);
-	setClientNom(pstClient, sAjoutNom);
-	setClientPrenom(pstClient, sAjoutPrenom);
-	setClientAdresse(pstClient, sAjoutAdresse);
-	setClientFrequentation(pstClient, enStatut);
+	pstClient->dNumClient = dNumero;
+	strcpy_s(pstClient->sNom, TAILLE_NOM, sAjoutNom);
+	strcpy_s(pstClient->sPrenom, TAILLE_PRENOM, sAjoutPrenom);
+	strcpy_s(pstClient->sAdresse, TAILLE_ADRESSE, sAjoutAdresse);
+	pstClient->enFrequentation = enStatut;
 }
 
 void LireDataNouvClientViaConsole(struct etClient* pstClient, int Index, struct etConsole* pstConsole)

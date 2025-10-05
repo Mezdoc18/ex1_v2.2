@@ -3,6 +3,11 @@
 #include "console.h"
 #include "collclients.h"
 
+void InitConsole(struct etConsole* pConsole)
+{
+    pConsole->evitwarning = 0;
+}
+
 void AffichageConsole(struct etConsole* pConsole, const char *string)
 {
     printf("%s", string);

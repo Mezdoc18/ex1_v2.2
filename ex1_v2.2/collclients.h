@@ -26,3 +26,5 @@ void AfficherCollClient(struct etCollClient* pstCollClient, struct etConsole* ps
 int SupprimerClientDeLaColl(struct etCollClient* pstCollClient, struct etConsole* pstConsole);
 
 void VideBuffer();
+
+int GetNbreClient(struct etCollClient* pstCollClient);

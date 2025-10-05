@@ -13,6 +13,7 @@ int main()
     int dChoix = 0;
 
     initCollClient(&oSocietePOO);
+    InitConsole(&oConsole);
   
     do
     {
@@ -33,10 +34,21 @@ int main()
             break;
 
         case 3:
+        {
+            int dNbreClient = 0;
+            char sNbreClient[12] = { '\0' };
+
+            AffichageConsole(&oConsole, "\n");
+            AffichageConsole(&oConsole, "Nombre total de client dans la societe: ");
+            dNbreClient = GetNbreClient(&oSocietePOO);
+            _itoa_s(dNbreClient, sNbreClient, 10);
+            AffichageConsole(&oConsole, sNbreClient);
+            AffichageConsole(&oConsole, "\n");
             AfficherCollClient(&oSocietePOO, &oConsole);
+            AffichageConsole(&oConsole, "\n");
 
             break;
-
+        }
         case 4:
             AffichageConsole(&oConsole,"Merci et a bientot\n");
             break;

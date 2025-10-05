@@ -86,3 +86,8 @@ int SupprimerClientDeLaColl(struct etCollClient* pstCollClient, struct etConsole
 	}
 }
 
+int GetNbreClient(struct etCollClient* pstCollClient)
+{
+	return pstCollClient->dNbreClient;	
+}
+

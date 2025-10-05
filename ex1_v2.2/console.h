@@ -5,6 +5,8 @@ struct etConsole
 	int evitwarning = 0;
 };
 
+void InitConsole(struct etConsole* pConsole);
+
 void AffichageConsole(struct etConsole* pConsole, const char* string);
 
 int LireIntConsole(struct etConsole* pConsole);
