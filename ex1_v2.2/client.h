@@ -24,7 +24,7 @@ struct etClient
 
 // setters
 
-void InitClient(struct etClient* pstClient, int dNumero, char sAjoutNom[], char sAjoutPrenom[], char sAjoutAdresse[], enum etStatClient enStatut);
+void InitAJoutClient(struct etClient* pstClient, int dNumero, char sAjoutNom[], char sAjoutPrenom[], char sAjoutAdresse[], enum etStatClient enStatut);
 
 // getters
 
@@ -40,9 +40,7 @@ enum etStatClient getClientFrequentation(struct etClient* pstClient);
 
 // fonctions autres
 
-void SupprimerClient(struct etClient* pstClient);
-
-void LireDataNouvClientViaConsole(struct etClient* pstClient, int Index, struct etConsole* pstConsole);
+void Supprimer(struct etClient* pstClient);
 
 int AfficherClient(struct etClient* pstClient, struct etConsole *pstConsole);
 

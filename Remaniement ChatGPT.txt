@@ -1,0 +1,221 @@
+🔑 Objectif : Séparer la logique des données et l'affichage
+
+Donc, voici ce qu'on va faire :
+
+Client et CollectionClient : gèrent les données uniquement (pas de printf dans ces modules).
+
+Console : gère uniquement l'affichage des informations et les entrées de l'utilisateur.
+
+🧩 Solution
+
+Je vais réécrire les modules en respectant ce principe.
+
+1️⃣ console.h
+
+#ifndef CONSOLE_H
+#define CONSOLE_H
+
+#include <stdio.h>
+
+typedef struct {
+    int dummy;  // Non utilisé mais défini pour respecter l'encapsulation d'un objet
+} etConsole;
+
+void InitConsole(etConsole* c);
+void AffichageConsole(const etConsole* c, const char* texte);
+void LireTexteConsole(const etConsole* c, char* buffer, int taille);
+int LireIntConsole(const etConsole* c);
+
+#endif
+
+2️⃣ console.c
+#include "console.h"
+#include <string.h>
+
+void InitConsole(etConsole* c) {
+    c->dummy = 0;  // Aucune fonctionnalité, juste pour la structure
+}
+
+void AffichageConsole(const etConsole* c, const char* texte) {
+    (void)c;  // On ne l'utilise pas mais on garde la structure d'objet
+    printf("%s", texte);
+}
+
+void LireTexteConsole(const etConsole* c, char* buffer, int taille) {
+    (void)c;  // Idem
+    fgets(buffer, taille, stdin);
+    buffer[strcspn(buffer, "\n")] = 0;  // Pour retirer le '\n' de fgets
+}
+
+int LireIntConsole(const etConsole* c) {
+    (void)c;
+    int val;
+    scanf("%d", &val);
+    getchar();  // Consommer le '\n' après le scanf
+    return val;
+}
+3️⃣ client.h
+
+#ifndef CLIENT_H
+#define CLIENT_H
+
+#define TAILLE_NOM 50
+#define TAILLE_ADRESSE 100
+
+typedef enum {
+    INCONNUE = 0,
+    OCCASIONNEL,
+    REGULIER,
+    TRES_REGULIER
+} etStatClient;
+
+typedef struct {
+    int dNumClient;
+    char sNom[TAILLE_NOM];
+    char sAdresse[TAILLE_ADRESSE];
+    etStatClient enFrequentation;
+} etClient;
+
+void InitClient(etClient* c, int num, const char* nom, const char* adresse, etStatClient stat);
+void SupprimerClient(etClient* c);
+
+#endif
+
+4️⃣ client.c
+
+#include "client.h"
+#include <string.h>
+
+void InitClient(etClient* c, int num, const char* nom, const char* adresse, etStatClient stat) {
+    c->dNumClient = num;
+    strcpy(c->sNom, nom);
+    strcpy(c->sAdresse, adresse);
+    c->enFrequentation = stat;
+}
+
+void SupprimerClient(etClient* c) {
+    c->dNumClient = 0;
+    strcpy(c->sNom, "");
+    strcpy(c->sAdresse, "");
+    c->enFrequentation = INCONNUE;
+}
+
+5️⃣ colclient.h
+
+#ifndef COLCLIENT_H
+#define COLCLIENT_H
+
+#include "client.h"
+
+#define MAX_CLIENTS 10
+
+typedef struct {
+    etClient clients[MAX_CLIENTS];
+    int nbClients;
+} etColClient;
+
+void InitColClient(etColClient* col);
+void AjouterClient(etColClient* col, const char* nom, const char* adresse, etStatClient stat);
+void SupprimerDernierClient(etColClient* col);
+
+#endif
+
+6️⃣ colclient.c
+
+#include "colclient.h"
+
+void InitColClient(etColClient* col) {
+    col->nbClients = 0;
+    for (int i = 0; i < MAX_CLIENTS; i++) {
+        SupprimerClient(&col->clients[i]);
+    }
+}
+
+void AjouterClient(etColClient* col, const char* nom, const char* adresse, etStatClient stat) {
+    if (col->nbClients >= MAX_CLIENTS) {
+        return;  // Ne fait rien si la collection est pleine
+    }
+    int num = col->nbClients + 1;
+    InitClient(&col->clients[col->nbClients], num, nom, adresse, stat);
+    col->nbClients++;
+}
+
+void SupprimerDernierClient(etColClient* col) {
+    if (col->nbClients == 0) {
+        return;  // Ne fait rien si la collection est vide
+    }
+    SupprimerClient(&col->clients[col->nbClients - 1]);
+    col->nbClients--;
+}
+
+7️⃣ main.c
+
+#include "console.h"
+#include "colclient.h"
+
+int main() {
+    etConsole console;
+    InitConsole(&console);
+
+    etColClient col;
+    InitColClient(&col);
+
+    int choix;
+    char nom[TAILLE_NOM];
+    char adresse[TAILLE_ADRESSE];
+    int statut;
+
+    do {
+        AffichageConsole(&console, "\n=== MINI CRUD CLIENT ===\n");
+        AffichageConsole(&console, "1. Ajouter client\n");
+        AffichageConsole(&console, "2. Supprimer dernier client\n");
+        AffichageConsole(&console, "0. Quitter\n");
+        AffichageConsole(&console, "Choix: ");
+        choix = LireIntConsole(&console);
+
+        switch (choix) {
+            case 1:
+                AffichageConsole(&console, "Nom: ");
+                LireTexteConsole(&console, nom, TAILLE_NOM);
+                AffichageConsole(&console, "Adresse: ");
+                LireTexteConsole(&console, adresse, TAILLE_ADRESSE);
+                AffichageConsole(&console, "Statut (1=Occasionnel, 2=Regulier, 3=Tres regulier): ");
+                statut = LireIntConsole(&console);
+                AjouterClient(&col, nom, adresse, (etStatClient)statut);
+                break;
+
+            case 2:
+                SupprimerDernierClient(&col);
+                break;
+
+            case 0:
+                AffichageConsole(&console, "Au revoir !\n");
+                break;
+
+            default:
+                AffichageConsole(&console, "Choix invalide.\n");
+        }
+    } while (choix != 0);
+
+    return 0;
+}
+
+🔑 Changement clé :
+
+Pas de printf dans Client ni dans CollectionClient.
+
+Toute l’affichage se fait par Console (via les fonctions AffichageConsole, LireTexteConsole, et LireIntConsole).
+
+Le main fait tout le travail d’interaction avec l’utilisateur (choix du CRUD, saisie, etc.).
+
+🔄 Résumé du fonctionnement :
+
+Client : Représente les données d'un client.
+
+CollectionClient : Gère plusieurs clients dans une collection (ajout/suppression), mais sans s'occuper de l'affichage.
+
+Console : Gère l'affichage et les entrées clavier.
+
+Main : Orchestration du CRUD en interagissant avec l'utilisateur via Console et manipulant la collection Client.
+
+

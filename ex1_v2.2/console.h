@@ -1,5 +1,13 @@
 #pragma once
 
+enum etChoixMenu
+{
+	INIT_CHOIX_MENU,
+	AJOUT_CLIENT,
+	SUPPRESSION_CLIENT,
+	AFFICHAGE_CLIENT,
+	EXIT_MENU
+};
 struct etConsole
 {
 	int evitwarning = 0;
