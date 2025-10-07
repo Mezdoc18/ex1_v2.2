@@ -1,7 +1,7 @@
 #include <iostream>
 #include <string.h>
 #include "console.h"
-#include "collclients.h"
+
 
 void InitConsole(struct etConsole* pConsole)
 {

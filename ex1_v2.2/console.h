@@ -12,3 +12,5 @@ void AffichageConsole(struct etConsole* pConsole, const char* string);
 int LireIntConsole(struct etConsole* pConsole);
 
 void LireTabCharConsole(struct etConsole* pConsole, char* tResultLect, const int dTailleMaxBuffer);
+
+void VideBuffer();

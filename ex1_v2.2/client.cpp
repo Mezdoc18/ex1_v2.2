@@ -35,7 +35,7 @@ enum etStatClient getClientFrequentation(struct etClient* pstClient)
 	return pstClient->enFrequentation;
 }
 
-void InitClient(struct etClient* pstClient, int dNumero, char sAjoutNom[], char sAjoutPrenom[], char sAjoutAdresse[], enum etStatClient enStatut)
+void setClient(struct etClient* pstClient, int dNumero, char sAjoutNom[], char sAjoutPrenom[], char sAjoutAdresse[], enum etStatClient enStatut)
 {
 	pstClient->dNumClient = dNumero;
 	strcpy_s(pstClient->sNom, TAILLE_NOM, sAjoutNom);
@@ -44,7 +44,7 @@ void InitClient(struct etClient* pstClient, int dNumero, char sAjoutNom[], char 
 	pstClient->enFrequentation = enStatut;
 }
 
-void LireDataNouvClientViaConsole(struct etClient* pstClient, int Index, struct etConsole* pstConsole)
+void AjoutClient(struct etClient* pstClient, int Index, struct etConsole* pstConsole)
 {
 	// Gestion NUMERO CLIENT
 
@@ -103,25 +103,24 @@ void LireDataNouvClientViaConsole(struct etClient* pstClient, int Index, struct 
 		}
 	} while (dFrequentation < 1 || dFrequentation >3);
 
-	InitClient(pstClient, dNumClient, sNomTemp, sPrenomTemp, sAdresseTemp, enTemp);
+	setClient(pstClient, dNumClient, sNomTemp, sPrenomTemp, sAdresseTemp, enTemp);
 }
 
 void SupprimerClient(struct etClient* pstClient)
 {
 	int dNull = 0;
-	char cNull = '\0';
+	char sNull[1] = { '\0' };
 
-	setclientNum(pstClient, dNull);
-	setClientNom(pstClient, &cNull);
-	setClientPrenom(pstClient, &cNull);
-	setClientAdresse(pstClient, &cNull);
-	setClientFrequentation(pstClient, INCONNUE);
+	pstClient->dNumClient = 0;
+	strcpy_s(pstClient->sNom, sNull);
+	strcpy_s(pstClient->sPrenom, sNull);
+	strcpy_s(pstClient->sAdresse, sNull);
+	pstClient->enFrequentation = INCONNUE;
+
 }
 
-int AfficherClient(struct etClient* pstClient, struct etConsole* pstConsole)
+void AfficherClient(struct etClient* pstClient, struct etConsole* pstConsole)
 {
-	int dClientVide = 1;
-
 	if (pstClient->dNumClient != 0)
 	{
 		char recupNum[12] = { '\0' };
@@ -139,31 +138,65 @@ int AfficherClient(struct etClient* pstClient, struct etConsole* pstConsole)
 		getClientNom(pstClient, recupNom);
 		AffichageConsole(pstConsole,recupNom);
 
+		AffichageConsole(pstConsole, "\nNOM: ");
+		getClientPrenom(pstClient, recupPrenom);
+		AffichageConsole(pstConsole, recupPrenom);
+
 		AffichageConsole(pstConsole, "\nADRESSE: ");
 		getClientAdresse(pstClient, recupAdresse);
 		AffichageConsole(pstConsole, recupAdresse);
 		
 		if (pstClient->enFrequentation == TRES_REGULIER)
 		{
-			printf("\nSTATUT: TRES REGULIER\n\n");
+			AffichageConsole(pstConsole, "\nSTATUT: TRES REGULIER\n\n");
 		}
 		else if (pstClient->enFrequentation == REGULIER)
 		{
-			printf("\nSTATUT: REGULIER\n\n");
+			AffichageConsole(pstConsole, "\nSTATUT: REGULIER\n\n");
 		}
 		else if (pstClient->enFrequentation == OCCASIONNEL)
 		{
-			printf("\nSTATUT: OCCASIONNEL\n\n");
+			AffichageConsole(pstConsole, "\nSTATUT: OCCASIONNEL\n\n");
 		}
 		else
 		{
 			printf("Erreur dans le status de frequentation\n");
 		}
-		return dClientVide = 0;
-	}
-	else
+	}		
+}
+
+int AfficherClientParFrequentation(struct etClient* pstClient, struct etConsole* pstConsole, enum etStatClient enFrequentation)
+{
+	int dClientTrouve = 0;
+
+	if (pstClient->dNumClient != 0 && pstClient->enFrequentation == enFrequentation)
 	{
-		return dClientVide = 1;
+		char recupNum[12] = { '\0' };
+		char recupNom[TAILLE_NOM] = { '\0' };
+		char recupPrenom[TAILLE_PRENOM] = { '\0' };
+		char recupAdresse[TAILLE_ADRESSE] = { '\0' };
+
+		AffichageConsole(pstConsole, "\n");
+		AffichageConsole(pstConsole, "NUM CLIENT: ");
+		int dNumClient = getClientNum(pstClient);
+		_itoa_s(dNumClient, recupNum, 10);
+		AffichageConsole(pstConsole, recupNum);
+
+		AffichageConsole(pstConsole, "\nNOM: ");
+		getClientNom(pstClient, recupNom);
+		AffichageConsole(pstConsole, recupNom);
+
+		AffichageConsole(pstConsole, "\nNOM: ");
+		getClientPrenom(pstClient, recupPrenom);
+		AffichageConsole(pstConsole, recupPrenom);
+
+		AffichageConsole(pstConsole, "\nADRESSE: ");
+		getClientAdresse(pstClient, recupAdresse);
+		AffichageConsole(pstConsole, recupAdresse);
+		AffichageConsole(pstConsole, "\n\n");
+
+		dClientTrouve = 1;
 	}
-		
+
+	return dClientTrouve;
 }

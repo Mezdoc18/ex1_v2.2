@@ -1,5 +1,6 @@
 #pragma once
 #include "client.h"
+
 #define SUCCES 0
 #define LISTE_VIDE 1
 #define PLACE_DISPONIBLE 2
@@ -23,8 +24,8 @@ int AjouterClientDansCollection(struct etCollClient* pstCollClient, struct etCon
 
 void AfficherCollClient(struct etCollClient* pstCollClient, struct etConsole* pstConsole);
 
-int SupprimerClientDeLaColl(struct etCollClient* pstCollClient, struct etConsole* pstConsole);
+void AffichCollClientParFrequentation(struct etCollClient* pstCollClient, struct etConsole* pstConsole, enum etStatClient enFrequ);
 
-void VideBuffer();
+int SupprimerClientDeLaColl(struct etCollClient* pstCollClient, struct etConsole* pstConsole);
 
 int GetNbreClient(struct etCollClient* pstCollClient);

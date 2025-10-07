@@ -2,17 +2,14 @@
 #include "collclients.h"
 #include "console.h"
 
+
 void initCollClient(struct etCollClient* pstCollClient)
 {
 	char sNull = { '\0' };
 
 	for (int dI = 0; dI < TAILLETAB_CLIENT; dI++)
 	{
-		setclientNum(&pstCollClient->tClients[dI], 0);
-		setClientNom(&pstCollClient->tClients[dI], &sNull);
-		setClientPrenom(&pstCollClient->tClients[dI], &sNull);
-		setClientAdresse(&pstCollClient->tClients[dI], &sNull);
-		setClientFrequentation(&pstCollClient->tClients[dI], INCONNUE);
+		setClient(&pstCollClient->tClients[dI], 0, &sNull, &sNull, &sNull, INCONNUE);
 	}
 	pstCollClient->dNbreClient = 0;
 }
@@ -35,7 +32,7 @@ int AjouterClientDansCollection(struct etCollClient* pstCollClient, struct etCon
 		//mais aussi l'index de la prochaine struct client dispo
 		int Ix = pstCollClient->dNbreClient;
 
-		LireDataNouvClientViaConsole(&pstCollClient->tClients[Ix], Ix, pstConsole);
+		AjoutClient(&pstCollClient->tClients[Ix], Ix, pstConsole);
 				
 		pstCollClient->dNbreClient++;	
 		return SUCCES;
@@ -49,17 +46,40 @@ int AjouterClientDansCollection(struct etCollClient* pstCollClient, struct etCon
 
 void AfficherCollClient(struct etCollClient* pstCollClient, struct etConsole *pstConsole)
 {
-	// compteur qui va s'incrémenter à chaque fois que AfficherClient est appelé et que le client sera vide
-	// si le compteur = au nbre de place du tableau, alors on affiche qu'il est vide
-	int dCompteur = 0;
+	for (int dI = 0; dI < TAILLETAB_CLIENT; dI++)
+	{
+		AfficherClient(&pstCollClient->tClients[dI], pstConsole);
+	}	
+}
+void AffichCollClientParFrequentation(struct etCollClient* pstCollClient, struct etConsole* pstConsole, enum etStatClient enFrequ)
+{
+	// variable qui vaudra 0 à la fin de la fonction si aucun client trouve avec cette frequentation
+	int dConditionVerifie = 0; 
+
+
+	switch (enFrequ)
+	{
+		case OCCASIONNEL:
+			AffichageConsole(pstConsole, "\nLISTE CLIENTS OCCASSIONNELS\n");
+			break;
+		case REGULIER:
+			AffichageConsole(pstConsole, "\nLISTE CLIENTS REGULIERS\n");
+			break;
+		case TRES_REGULIER:
+			AffichageConsole(pstConsole, "\nLISTE CLIENTS TRES REGULIERS\n");
+			break;
+		default:
+			AffichageConsole(pstConsole, "Erreur statut\n");
+			break;
+	}
 
 	for (int dI = 0; dI < TAILLETAB_CLIENT; dI++)
 	{
-		dCompteur += AfficherClient(&pstCollClient->tClients[dI], pstConsole);
+		dConditionVerifie += AfficherClientParFrequentation(&pstCollClient->tClients[dI], pstConsole, enFrequ);
 	}
 
-	if (dCompteur == TAILLETAB_CLIENT)
-		AffichageConsole(pstConsole, "Tableau VIDE\n");
+	if (dConditionVerifie == 0)
+		AffichageConsole(pstConsole, "Pas de client trouve.\n\n");
 }
 
 int SupprimerClientDeLaColl(struct etCollClient* pstCollClient, struct etConsole* pstConsole)
@@ -76,12 +96,14 @@ int SupprimerClientDeLaColl(struct etCollClient* pstCollClient, struct etConsole
 		} while (dNumClientASupp < 1 || dNumClientASupp > TAILLETAB_CLIENT);
 
 		SupprimerClient(&pstCollClient->tClients[dNumClientASupp - 1]);
+		pstCollClient->dNbreClient--; // on décrémente le compteur de CollClient
 
 		AffichageConsole(pstConsole, "Client supprime avec succes!\n\n");
 		return SUCCES;
 	}
 	else
 	{
+		AffichageConsole(pstConsole, "Aucun client a supprimer actuellement.\n\n");
 		return LISTE_VIDE;
 	}
 }
