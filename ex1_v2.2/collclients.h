@@ -5,6 +5,7 @@
 #define LISTE_VIDE 1
 #define PLACE_DISPONIBLE 2
 #define TABLEAU_PLEIN 3
+#define ANNUL_SUPP 5
 
 #define TAILLETAB_CLIENT 3
 

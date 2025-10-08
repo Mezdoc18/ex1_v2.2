@@ -88,25 +88,57 @@ int SupprimerClientDeLaColl(struct etCollClient* pstCollClient, struct etConsole
 	 // on vérifie que la collection n'est pas vide
 	if (pstCollClient->dPlaceLibreClient > 0)
 	{
+		int dIx = -1;
 		int dNumClientASupp = 0;
+
 		do
-		{
+		{			
+			int dNumClient = 0;
+			char sNumClient[12] = { '\0' };
+
 			AffichageConsole(pstConsole, "\nQuel client voulez-vous supprimer?\n");
 			AffichageConsole(pstConsole, "Merci d'entrer son numero dans le choix propose ci dessous?\n");
+			AffichageConsole(pstConsole, "Si vous souhaitez annuler la suppression, tapez (-1)\n");
+
 			for (int dJx = 0; dJx < TAILLETAB_CLIENT; dJx++)
 			{
-				if (getClientNum(&pstCollClient->tClients[dJx]) != 0)
+				dNumClient = getClientNum(&pstCollClient->tClients[dJx]);
+
+				if (dNumClient != 0)
 				{
-					AffichageConsole(pstConsole, dJx + 1);
+					_itoa_s(dNumClient, sNumClient, 10);
+					AffichageConsole(pstConsole, sNumClient);
 					AffichageConsole(pstConsole, " ");
 				}
 			}
 			AffichageConsole(pstConsole, "\n");
 
 			dNumClientASupp = LireIntConsole(pstConsole);
-		} while (dNumClientASupp < 1 || dNumClientASupp > TAILLETAB_CLIENT);
 
-		int dIx = dNumClientASupp - 1; // indice du client dans le tableau
+			if (dNumClientASupp == -1)
+			{
+				AffichageConsole(pstConsole, "Annulation de la suppression d'un client\n\n");
+				return ANNUL_SUPP;
+			}
+			// on recherche l'indice correspond au numéro de client à supprimer
+			dIx = -1;
+
+			for (int i = 0; i < pstCollClient->dPlaceLibreClient; i++)
+			{
+				if (getClientNum(&pstCollClient->tClients[i]) == dNumClientASupp)
+				{
+					dIx = i;
+					break;
+				}
+			}
+
+			if (dIx == -1)
+			{
+				AffichageConsole(pstConsole, "Le client avec ce numéro n'existe pas.\n\n");
+			}
+		} while (dIx == -1);
+	
+
 
 		SupprimerClient(&pstCollClient->tClients[dIx]);
 
