@@ -11,7 +11,8 @@
 struct etCollClient
 {
 	struct etClient tClients[TAILLETAB_CLIENT];
-	int dNbreClient;
+	int dPlaceLibreClient;
+	int dIDClient;
 
 };
 

@@ -92,17 +92,7 @@ int SupprimerClientDeLaColl(struct etCollClient* pstCollClient, struct etConsole
 		do
 		{
 			AffichageConsole(pstConsole, "\nQuel client voulez-vous supprimer?\n");
-			AffichageConsole(pstConsole, "Merci d'entrer son numero dans le choix propose ci dessous?\n");
-			for (int dJx = 0; dJx < TAILLETAB_CLIENT; dJx++)
-			{
-				if (getClientNum(&pstCollClient->tClients[dJx]) != 0)
-				{
-					AffichageConsole(pstConsole, dJx + 1);
-					AffichageConsole(pstConsole, " ");
-				}
-			}
-			AffichageConsole(pstConsole, "\n");
-
+			AffichageConsole(pstConsole, "Merci d'entrer son numero?\n");
 			dNumClientASupp = LireIntConsole(pstConsole);
 		} while (dNumClientASupp < 1 || dNumClientASupp > TAILLETAB_CLIENT);
 

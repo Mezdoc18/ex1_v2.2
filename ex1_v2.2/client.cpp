@@ -47,7 +47,7 @@ void AjoutClient(struct etClient* pstClient, int Index, struct etConsole* pstCon
 
 	// transforme int en string
 	_itoa_s(dNumClient, sNumClient, 10);
-	AffichageConsole(pstConsole, "Le numero attribue au client est ");
+	AffichageConsole(pstConsole, "\nLe numero attribue au client est ");
 	AffichageConsole(pstConsole, sNumClient);
 	AffichageConsole(pstConsole, "\n");
 

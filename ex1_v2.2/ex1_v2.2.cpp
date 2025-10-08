@@ -42,17 +42,17 @@ int main()
 
             case AFFICH_LISTE:
             {
-                int dNbreClient = 0;
+                int dPlaceLibreClient = 0;
                 char sNbreClient[12] = { '\0' };
 
                 AffichageConsole(&oConsole, "\n");
                 AffichageConsole(&oConsole, "Nombre total de client dans la societe: ");
-                dNbreClient = GetNbreClient(&oSocietePOO);
-                _itoa_s(dNbreClient, sNbreClient, 10);
+                dPlaceLibreClient = GetNbreClient(&oSocietePOO);
+                _itoa_s(dPlaceLibreClient, sNbreClient, 10);
                 AffichageConsole(&oConsole, sNbreClient);
                 AffichageConsole(&oConsole, "\n");
 
-                if (dNbreClient != 0)
+                if (dPlaceLibreClient != 0)
                 {
                     AfficherCollClient(&oSocietePOO, &oConsole);
                     AffichageConsole(&oConsole, "\n");
