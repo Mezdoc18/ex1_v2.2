@@ -6,7 +6,7 @@
 #define PLACE_DISPONIBLE 2
 #define TABLEAU_PLEIN 3
 
-#define TAILLETAB_CLIENT 20
+#define TAILLETAB_CLIENT 3
 
 struct etCollClient
 {

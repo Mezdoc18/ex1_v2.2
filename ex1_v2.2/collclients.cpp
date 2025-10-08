@@ -35,6 +35,7 @@ int AjouterClientDansCollection(struct etCollClient* pstCollClient, struct etCon
 		AjoutClient(&pstCollClient->tClients[Ix], Ix, pstConsole);
 				
 		pstCollClient->dNbreClient++;	
+		AffichageConsole(pstConsole, "\n");
 		return SUCCES;
 	}
 	else
@@ -76,7 +77,7 @@ void AffichCollClientParFrequentation(struct etCollClient* pstCollClient, struct
 
 	for (int dI = 0; dI < TAILLETAB_CLIENT; dI++)
 	{
-		dConditionVerifie += AfficherClientParFrequentation(&pstCollClient->tClients[dI], pstConsole, enFrequ);
+		dConditionVerifie += AfficherClientParFrequentation(&pstCollClient->tClients[dI], pstConsole, enChoixFrequ);
 	}
 
 	if (dConditionVerifie == 0)
@@ -91,13 +92,24 @@ int SupprimerClientDeLaColl(struct etCollClient* pstCollClient, struct etConsole
 		int dNumClientASupp = 0;
 		do
 		{
-			AffichageConsole(pstConsole, "Quel client voulez-vous supprimer?\n");
+			AffichageConsole(pstConsole, "\nQuel client voulez-vous supprimer?\n");
 			AffichageConsole(pstConsole, "Merci d'entrer son numero?\n");
 			dNumClientASupp = LireIntConsole(pstConsole);
 		} while (dNumClientASupp < 1 || dNumClientASupp > TAILLETAB_CLIENT);
 
-		SupprimerClient(&pstCollClient->tClients[dNumClientASupp - 1]);
-		pstCollClient->dNbreClient--; // on décrémente le compteur de CollClient
+		int dIx = dNumClientASupp - 1; // indice du client dans le tableau
+
+		SupprimerClient(&pstCollClient->tClients[dIx]);
+
+		// on décalle tous les clients à D du client supprimé vers la G dans le tabclient
+		for (dIx; dIx < (pstCollClient->dNbreClient - 1); dIx++)
+		{
+			pstCollClient->tClients[dIx] = pstCollClient->tClients[dIx + 1];
+		}
+		// on décrémente le compteur de CollClient
+		pstCollClient->dNbreClient--; 
+		// on vide la dernière case client copiée dans la case à sa G sur laquelle pointe maintenant dNbreClient
+		SupprimerClient(&pstCollClient->tClients[pstCollClient->dNbreClient]);
 
 		AffichageConsole(pstConsole, "Client supprime avec succes!\n\n");
 		return SUCCES;
