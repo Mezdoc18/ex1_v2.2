@@ -3,13 +3,6 @@
 #include "client.h"
 #include "console.h"
 
-/********************************************************
- Printf devra être remplacé par l'objet console dans la
- fct void AfficherClient
-*********************************************************/
-
-
-
 int getClientNum(struct etClient* pstclient)
 {
 	return pstclient->dNumClient;
@@ -47,10 +40,12 @@ void setClient(struct etClient* pstClient, int dNumero, char sAjoutNom[], char s
 void AjoutClient(struct etClient* pstClient, int Index, struct etConsole* pstConsole)
 {
 	// Gestion NUMERO CLIENT
+	//Choix ici d'une attribution automatique de 1 à 20
 
 	int dNumClient = Index + 1;
 	char sNumClient[12] = {'\0'};
 
+	// transforme int en string
 	_itoa_s(dNumClient, sNumClient, 10);
 	AffichageConsole(pstConsole, "Le numero attribue au client est ");
 	AffichageConsole(pstConsole, sNumClient);
@@ -186,7 +181,7 @@ int AfficherClientParFrequentation(struct etClient* pstClient, struct etConsole*
 		getClientNom(pstClient, recupNom);
 		AffichageConsole(pstConsole, recupNom);
 
-		AffichageConsole(pstConsole, "\nNOM: ");
+		AffichageConsole(pstConsole, "\nPRENOM: ");
 		getClientPrenom(pstClient, recupPrenom);
 		AffichageConsole(pstConsole, recupPrenom);
 

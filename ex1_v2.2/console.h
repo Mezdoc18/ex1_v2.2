@@ -1,4 +1,12 @@
 #pragma once
+enum etChoixMenu
+{
+	AJOUT_CLIENT = 1,
+	SUPP_CLIENT,
+	AFFICH_LISTE,
+	AFFICH_FREQU,
+	QUITTER
+};
 
 struct etConsole
 {

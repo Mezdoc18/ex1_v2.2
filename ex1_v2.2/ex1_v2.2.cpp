@@ -11,7 +11,8 @@ int main()
     struct etConsole oConsole;
 
     int dChoix = 0;
-    enum etStatClient enChoix;
+    enum etStatClient enChoixFrequ;
+    enum etChoixMenu enChoixMenu;
 
     initCollClient(&oSocietePOO);
     InitConsole(&oConsole);
@@ -29,20 +30,17 @@ int main()
             dChoix = LireIntConsole(&oConsole);
         } while (dChoix < 1 || dChoix > 5);
 
-        switch (dChoix)
+        switch (enChoixMenu =(enum etChoixMenu)dChoix)
         {
-            case 1:
-           
+            case AJOUT_CLIENT:           
                 AjouterClientDansCollection(&oSocietePOO, &oConsole);
-            
                 break;
 
-            case 2:
-
+            case SUPP_CLIENT:
                 SupprimerClientDeLaColl(&oSocietePOO, &oConsole);
                 break;
 
-            case 3:
+            case AFFICH_LISTE:
             {
                 int dNbreClient = 0;
                 char sNbreClient[12] = { '\0' };
@@ -63,28 +61,29 @@ int main()
                     AffichageConsole(&oConsole, "Societe sans client actuellement\n\n");
                 break;
             }
-            case 4:
+            case AFFICH_FREQU:
+            {
                 dChoix = 0;
 
                 if (GetNbreClient(&oSocietePOO) == 0)
-                    AffichageConsole(&oConsole, "Societe sans client actuellement\n\n");
+                    AffichageConsole(&oConsole, "\nSociete sans client actuellement\n\n");
                 else
-                { 
+                {
                     do
                     {
                         AffichageConsole(&oConsole, "voulez-vous afficher la liste des:\n");
                         AffichageConsole(&oConsole, "- clients OCCASIONNELS? (1) \n");
                         AffichageConsole(&oConsole, "- clients REGULIERS? (2)\n");
                         AffichageConsole(&oConsole, "- clients TRES REGULIERS? (3)\n");
-                    
+
                         dChoix = LireIntConsole(&oConsole);
                     } while (dChoix < 1 || dChoix > 3);
-                
-                    AffichCollClientParFrequentation(&oSocietePOO, &oConsole, enChoix = (enum etStatClient) dChoix);
+
+                    AffichCollClientParFrequentation(&oSocietePOO, &oConsole, enChoixFrequ = (enum etStatClient)dChoix);
                 }
                 break;
-
-            case 5:
+            }
+            case QUITTER:
                 AffichageConsole(&oConsole,"Merci et a bientot\n");
                 break;
 

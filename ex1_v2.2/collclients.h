@@ -24,7 +24,7 @@ int AjouterClientDansCollection(struct etCollClient* pstCollClient, struct etCon
 
 void AfficherCollClient(struct etCollClient* pstCollClient, struct etConsole* pstConsole);
 
-void AffichCollClientParFrequentation(struct etCollClient* pstCollClient, struct etConsole* pstConsole, enum etStatClient enFrequ);
+void AffichCollClientParFrequentation(struct etCollClient* pstCollClient, struct etConsole* pstConsole, enum etStatClient enChoixFrequ);
 
 int SupprimerClientDeLaColl(struct etCollClient* pstCollClient, struct etConsole* pstConsole);
 

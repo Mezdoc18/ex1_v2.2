@@ -51,13 +51,14 @@ void AfficherCollClient(struct etCollClient* pstCollClient, struct etConsole *ps
 		AfficherClient(&pstCollClient->tClients[dI], pstConsole);
 	}	
 }
-void AffichCollClientParFrequentation(struct etCollClient* pstCollClient, struct etConsole* pstConsole, enum etStatClient enFrequ)
+
+void AffichCollClientParFrequentation(struct etCollClient* pstCollClient, struct etConsole* pstConsole, enum etStatClient enChoixFrequ)
 {
 	// variable qui vaudra 0 à la fin de la fonction si aucun client trouve avec cette frequentation
 	int dConditionVerifie = 0; 
 
 
-	switch (enFrequ)
+	switch (enChoixFrequ)
 	{
 		case OCCASIONNEL:
 			AffichageConsole(pstConsole, "\nLISTE CLIENTS OCCASSIONNELS\n");
