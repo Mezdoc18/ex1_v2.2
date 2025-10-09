@@ -7,7 +7,7 @@
 #define TABLEAU_PLEIN 3
 #define ANNUL_SUPP 5
 
-#define TAILLETAB_CLIENT 3
+#define TAILLETAB_CLIENT 20
 
 struct etCollClient
 {
