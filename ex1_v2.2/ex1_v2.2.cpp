@@ -5,6 +5,13 @@
 #include "collclients.h"
 #include "console.h"
 
+/// <summary>
+/// Correction du prof: dans CollClients la fonction AjouterClients doit recevoir soit directement une copie de struct client à copier soit les 
+/// différentes valeurs 
+/// C'est en effet différent de fournir les valeurs que de les modifier dans le main
+/// Ce sont les fonctions propres à clients qui vont traiter les données donc pas de problème d'encapsulation!
+/// <returns></returns>
+
 int main()
 {
 	struct etCollClient oSocietePOO = { 0 };
