@@ -39,10 +39,58 @@ int main()
 
         switch (enChoixMenu =(enum etChoixMenu)dChoix)
         {
-            case AJOUT_CLIENT:           
-                AjouterClientDansCollection(&oSocietePOO, &oConsole);
-                break;
+            case AJOUT_CLIENT:
+            {
+                // Gestion NOM
+                char sNomTemp[TAILLE_NOM] = { '\0' };
+                AffichageConsole(&oConsole, "Quel est le nom du client? ");
+                LireTabCharConsole(&oConsole, sNomTemp, TAILLE_NOM);
 
+                // Gestion PRENOM
+                char sPrenomTemp[TAILLE_PRENOM] = { '\0' };
+                AffichageConsole(&oConsole, "Quel est le prenom du client? ");
+                LireTabCharConsole(&oConsole, sPrenomTemp, TAILLE_PRENOM);
+
+                // Gestion ADRESSE
+                char sAdresseTemp[TAILLE_ADRESSE] = { '\0' };
+                AffichageConsole(&oConsole, "Quelle est l'adresse du client? ");
+                LireTabCharConsole(&oConsole, sAdresseTemp, TAILLE_ADRESSE);
+
+                // Gestion FREQUENTATION
+                int dFrequentation = 0;
+                enum etStatClient enTemp = INCONNUE;
+
+                AffichageConsole(&oConsole, "Quelle est la frequentation du client?\n");
+                AffichageConsole(&oConsole, "OCCASIONNEL(1)\n");
+                AffichageConsole(&oConsole, "REGULIER(2)\n");
+                AffichageConsole(&oConsole, "TRES REGULIER(3)\n");
+
+                do
+                {
+                    switch (dFrequentation = LireIntConsole(&oConsole))
+                    {
+                    case 1:
+                        enTemp = OCCASIONNEL;
+                        break;
+
+                    case 2:
+                        enTemp = REGULIER;
+                        break;
+                    case 3:
+                        enTemp = TRES_REGULIER;
+                        break;
+                    default:
+                        AffichageConsole(&oConsole, "Erreur dans le choix:\n");
+                        AffichageConsole(&oConsole, "OCCASIONNEL(1)\n");
+                        AffichageConsole(&oConsole, "REGULIER(2)\n");
+                        AffichageConsole(&oConsole, "TRES REGULIER(3)\n\n");
+                        break;
+                    }
+                } while (dFrequentation < 1 || dFrequentation >3);
+
+                AjouterClientDansCollection(&oSocietePOO, &oConsole, sNomTemp, sPrenomTemp, sAdresseTemp, enTemp);
+                break;
+            }
             case SUPP_CLIENT:
                 SupprimerClientDeLaColl(&oSocietePOO, &oConsole);
                 break;

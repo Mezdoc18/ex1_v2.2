@@ -42,7 +42,7 @@ enum etStatClient getClientFrequentation(struct etClient* pstClient);
 
 void SupprimerClient(struct etClient* pstClient);
 
-void AjoutClient(struct etClient* pstClient, int Index, struct etConsole* pstConsole);
+void AjoutClient(struct etClient* pstClient, int Index, struct etConsole* pstConsole, char sAjoutNom[], char sAjoutPrenom[], char sAjoutAdresse[], enum etStatClient enStatut);
 
 void AfficherClient(struct etClient* pstClient, struct etConsole *pstConsole);
 

@@ -25,11 +25,11 @@ int isTabFull(struct etCollClient* pstCollClient)
 		return TABLEAU_PLEIN;
 }
 
-int AjouterClientDansCollection(struct etCollClient* pstCollClient, struct etConsole *pstConsole)
+int AjouterClientDansCollection(struct etCollClient* pstCollClient, struct etConsole *pstConsole, char sAjoutNom[], char sAjoutPrenom[], char sAjoutAdresse[], enum etStatClient enStatut)
 {
 	if (isTabFull(pstCollClient) == PLACE_DISPONIBLE)
 	{
-		AjoutClient(&pstCollClient->tClients[pstCollClient->dPlaceLibreClient], pstCollClient->dIDClient, pstConsole);
+		AjoutClient(&pstCollClient->tClients[pstCollClient->dPlaceLibreClient], pstCollClient->dIDClient, pstConsole, sAjoutNom, sAjoutPrenom, sAjoutAdresse, enStatut);
 				
 		pstCollClient->dPlaceLibreClient++;	
 		pstCollClient->dIDClient++;

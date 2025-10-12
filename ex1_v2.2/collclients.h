@@ -22,7 +22,7 @@ void initCollClient(struct etCollClient* pstCollClient);
 // Vérifie si place libre
 int isTabFull(struct etCollClient* pstCollClient);
 
-int AjouterClientDansCollection(struct etCollClient* pstCollClient, struct etConsole* pstConsole);
+int AjouterClientDansCollection(struct etCollClient* pstCollClient, struct etConsole* pstConsole, char sAjoutNom[], char sAjoutPrenom[], char sAjoutAdresse[], enum etStatClient enStatut);
 
 void AfficherCollClient(struct etCollClient* pstCollClient, struct etConsole* pstConsole);
 

@@ -37,7 +37,7 @@ void setClient(struct etClient* pstClient, int dNumero, char sAjoutNom[], char s
 	pstClient->enFrequentation = enStatut;
 }
 
-void AjoutClient(struct etClient* pstClient, int Index, struct etConsole* pstConsole)
+void AjoutClient(struct etClient* pstClient, int Index, struct etConsole* pstConsole, char sAjoutNom[], char sAjoutPrenom[], char sAjoutAdresse[], enum etStatClient enStatut)
 {
 	// Gestion NUMERO CLIENT
 	//Choix ici d'une attribution automatique de 1 à 20
@@ -50,55 +50,8 @@ void AjoutClient(struct etClient* pstClient, int Index, struct etConsole* pstCon
 	AffichageConsole(pstConsole, "\nLe numero attribue au client est ");
 	AffichageConsole(pstConsole, sNumClient);
 	AffichageConsole(pstConsole, "\n");
-
-	// Gestion NOM
-	char sNomTemp[TAILLE_NOM] = { '\0' };
-	AffichageConsole(pstConsole, "Quel est le nom du client? ");
-	LireTabCharConsole(pstConsole, sNomTemp, TAILLE_NOM);
-
-	// Gestion PRENOM
-	char sPrenomTemp[TAILLE_PRENOM] = { '\0' };
-	AffichageConsole(pstConsole, "Quel est le prenom du client? ");
-	LireTabCharConsole(pstConsole, sPrenomTemp, TAILLE_PRENOM);
-
-	// Gestion ADRESSE
-	char sAdresseTemp[TAILLE_ADRESSE] = { '\0' };
-	AffichageConsole(pstConsole, "Quelle est l'adresse du client? ");
-	LireTabCharConsole(pstConsole, sAdresseTemp, TAILLE_ADRESSE);
-
-	// Gestion FREQUENTATION
-	int dFrequentation = 0;
-	enum etStatClient enTemp = INCONNUE;
-
-	AffichageConsole(pstConsole, "Quelle est la frequentation du client?\n");
-	AffichageConsole(pstConsole, "OCCASIONNEL(1)\n");
-	AffichageConsole(pstConsole, "REGULIER(2)\n");
-	AffichageConsole(pstConsole, "TRES REGULIER(3)\n");
-
-	do
-	{
-		switch (dFrequentation = LireIntConsole(pstConsole))
-		{
-		case 1:
-			enTemp = OCCASIONNEL;
-			break;
-
-		case 2:
-			enTemp = REGULIER;
-			break;
-		case 3:
-			enTemp = TRES_REGULIER;
-			break;
-		default:
-			AffichageConsole(pstConsole, "Erreur dans le choix:\n");
-			AffichageConsole(pstConsole, "OCCASIONNEL(1)\n");
-			AffichageConsole(pstConsole, "REGULIER(2)\n");
-			AffichageConsole(pstConsole, "TRES REGULIER(3)\n\n");
-			break;
-		}
-	} while (dFrequentation < 1 || dFrequentation >3);
-
-	setClient(pstClient, dNumClient, sNomTemp, sPrenomTemp, sAdresseTemp, enTemp);
+	
+	setClient(pstClient, dNumClient, sAjoutNom, sAjoutPrenom, sAjoutAdresse, enStatut);
 }
 
 void SupprimerClient(struct etClient* pstClient)
